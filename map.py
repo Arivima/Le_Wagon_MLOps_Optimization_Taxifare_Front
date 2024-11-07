@@ -27,6 +27,13 @@ date_and_time = datetime.datetime.combine(d, t)
 # Asking for user input : number of passengers
 passengers = st.number_input('Input number of passengers', 0, 8,1,1)
 
+model_wagon = st.toggle("Use advanced model")
+
+if model_wagon:
+    st.write("Feature activated!")
+    url = 'https://taxifare.lewagon.ai/predict'
+else:
+    url = 'https://taxifare-opt-895249977448.europe-west1.run.app/predict'
 
 # Asking for user input : pickup and dropoff points
 st.markdown('''
@@ -51,6 +58,7 @@ if 'pickup' not in st.session_state:
     st.session_state.pickup = None
 if 'dropoff' not in st.session_state:
     st.session_state.dropoff = None
+
 
 # Create a folium map
 m = folium.Map(location=[center_lat, center_lon], zoom_start=13)
@@ -79,6 +87,7 @@ if st.session_state.dropoff:
         popup='Dropoff Location',
         icon=folium.Icon(color='red')
     ).add_to(m)
+
 
 # Render the map and handle clicks
 map_data = st_folium(m, width=700, height=500)
@@ -125,6 +134,7 @@ pickup = st.session_state.pickup
 dropoff = st.session_state.dropoff
 
 
+
 # API call
 try:
     params = {
@@ -135,15 +145,21 @@ try:
         'dropoff_latitude':dropoff[1],
         'passenger_count':passengers
     }
-    url = 'https://taxifare-opt-895249977448.europe-west1.run.app/predict'
+
 
     try:
         response = requests.get(url, params=params)
         response.raise_for_status()
-        fare = response.json()
+        if not model_wagon:
+            fare = round(response.json()['fare']['0'], 2)
+            _emoji = emoji.emojize(':rocket:')
+
+        if model_wagon:
+            fare = round(response.json()['fare'], 2)
+            _emoji = emoji.emojize(':steam_locomotive:')
+
         st.write('For a ride on ', d, 'at', t, 'with', passengers, 'passengers')
-        train = emoji.emojize(':rocket:')
-        st.write(train, 'expected fare :', round(fare['fare'], 2))
+        st.write(_emoji, 'expected fare :', fare)
     except:
         url = 'https://taxifare.lewagon.ai/predict'
         response = requests.get(url, params=params)
@@ -152,4 +168,4 @@ try:
         train = emoji.emojize(':steam_locomotive:')
         st.write(train, 'expected fare :', round(fare['fare'], 2))
 except Exception as e:
-    st.write('For a ride on ', d, 'at', t, 'with', passengers, 'passengers')
+    st.write('Error', e)
