@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "le-wagon-mlops-optimization-taxifare-front"
+version = "0.1.0"
+description = "streamlit appp for taxifare le wagon project"
+authors = ["Arielle Villa Massone <arielle.villamassone@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.9.7 || >3.9.7,<4.0"
+streamlit = "^1.40.0"
+folium = "^0.18.0"
+streamlit-folium = "^0.23.1"
+requests = "^2.32.3"
+emoji = "^2.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

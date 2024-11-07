@@ -1,8 +1,10 @@
+# map.py
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
 import datetime
 import requests
+import emoji
 
 # Initializing the Streamlit app
 st.title("New York taxi estimator")
@@ -122,10 +124,6 @@ if map_data and 'last_clicked' in map_data and map_data['last_clicked'] is not N
 pickup = st.session_state.pickup
 dropoff = st.session_state.dropoff
 
-# if pickup:
-#     st.write(f"Pickup Location: {pickup[0]}, {pickup[1]}")
-# if dropoff:
-#     st.write(f"Dropoff Location: {dropoff[0]}, {dropoff[1]}")
 
 # API call
 try:
@@ -137,11 +135,21 @@ try:
         'dropoff_latitude':dropoff[1],
         'passenger_count':passengers
     }
-    url = 'https://taxifare.lewagon.ai/predict'
+    url = 'https://taxifare-opt-895249977448.europe-west1.run.app/predict'
 
-    response = requests.get(url, params=params)
-    fare = response.json()
-    st.write('For a ride on ', d, 'at', t, 'with', passengers, 'passengers')
-    st.write('expected fare :', round(fare['fare'], 2))
-except:
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        fare = response.json()
+        st.write('For a ride on ', d, 'at', t, 'with', passengers, 'passengers')
+        train = emoji.emojize(':rocket:')
+        st.write(train, 'expected fare :', round(fare['fare'], 2))
+    except:
+        url = 'https://taxifare.lewagon.ai/predict'
+        response = requests.get(url, params=params)
+        fare = response.json()
+        st.write('For a ride on ', d, 'at', t, 'with', passengers, 'passengers')
+        train = emoji.emojize(':steam_locomotive:')
+        st.write(train, 'expected fare :', round(fare['fare'], 2))
+except Exception as e:
     st.write('For a ride on ', d, 'at', t, 'with', passengers, 'passengers')
