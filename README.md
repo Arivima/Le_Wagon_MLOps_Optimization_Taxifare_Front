@@ -1,67 +1,94 @@
-# Le Wagon - MLOps Optimization : Taxi fare estimator
-# Streamlit app
+**This repository is part of a larger project.**
 
-This project is a Streamlit application that estimates taxi fares based on user inputs, including pickup and dropoff locations, date and time, and passenger count.
-
-## Requirements
-To run this application, you need to have Python installed on your machine, along with Poetry for dependency management.
-
-## Installing Poetry
-
-If you haven't already installed Poetry, you can do so by following the instructions on the [Poetry website](https://python-poetry.org/docs/#installation). The most common installation command is:
-
-```bash
-curl -sSL https://install.python-poetry.org | python3 -
-```
-Make sure to follow any additional instructions to ensure that the Poetry binary is in your PATH.
+# The Taxifare Optimization project
 
 
-## Setting Up the Project
-1. Clone the Repository (if applicable):
+This project was completed as part of a Data Engineering Bootcamp at Le Wagon Paris and presented at Demo Day on November 8, 2024 ([View Project Demo Slides](https://docs.google.com/presentation/d/1KzT-0eyGO49xolFUZCZogSsWtMxqtQoaWvM5D2JieoY/edit?usp=sharing)).
 
-```bash
-git clone <repository-url>
-cd <repository-directory>
-```
+The objective of this project was to build a complete ETL and machine learning pipeline—from data ingestion to an end-user interface—using tools covered in the bootcamp. Given a four-day timeframe, we leveraged previous bootcamp exercises as a foundation, enabling us to focus on optimizing and studying the performance of the pipeline.
 
-2. Install Dependencies:
+Repositories that are part of the Taxifare Project:
+- **Taxifare**:
+A data engineering pipeline that ingests, processes, and stores NYC taxi ride data in cloud storage and a data warehouse.
+  - Distributed processing with `Spark`, on `Dataproc`
+  - Job orchestration using `Airflow`.
+  - Cloud storage on `Google Cloud Storage`
+  - Analytical warehouse with `BigQuery`
+- **Taxifare API**:
+A cloud-deployed API providing a prediction endpoint.
+  - Built with `FastAPi` and `Gunicorn`
+  - Deployed on `Google Cloud Run`, using a `Docker` image hosted in `Artifact Registery`
+- **Taxifare Front**:
+A `Streamlit` application that allows users to predict taxi fares with our model.
 
-Navigate to the project directory and run:
 
-```bash
-poetry install
-```
-This command will create a virtual environment and install all required dependencies specified in the pyproject.toml file.
 
-## Running the Application
+*The project complete pipeline*
+<img src="images/pipeline.png" alt="Project pipeline" width="800"/>
 
-1. Activate the Virtual Environment:
-Activate the Poetry virtual environment with:
-```bash
-poetry shell
-```
-2. Run the Streamlit App:
 
-While in the activated virtual environment, run:
+# Taxifare Front
 
-```bash
-streamlit run map.py
-```
+This project is a **Streamlit** application that estimates New York taxi fares based on user inputs such as ride date, time, pickup and dropoff locations, and number of passengers. It uses a backend API for fare prediction, and is part of a larger project built during a **Data Engineering Bootcamp** at **Le Wagon Paris**.
 
-3. Access the App:
+<img src="images/api.png" alt="API flow" width="800"/>
+
+*The front flow*
+
+## Readme Sections
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Usage](#usage)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Dependencies](#dependencies) - [License](#license)
+## Features
+
+- **Interactive Map**: Select pickup and dropoff locations by clicking on a map.
+- **Customizable Ride Options**: Input ride date, time, and passenger count.
+- **API Integration**: Connects to a machine learning model API for fare predictions.
+
+## Prerequisites
+- **Python 3.9.6**
+- **Poetry** for dependency management
+
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Arivima/le-wagon-mlops-optimization-taxifare-front.git
+   cd le-wagon-mlops-optimization-taxifare-front
+   ```
+
+2. Install dependencies using Poetry:
+   ```bash
+   poetry install
+   ```
+
+3. Run the Streamlit app:
+   ```bash
+   poetry run streamlit run map.py
+   ```
+4. Access the App:
 
 After running the command, you will see output in the terminal with a local URL (e.g., http://localhost:8501). Open this URL in your web browser to access the Taxi Fare Estimator application.
 
 ## Usage
+
 - Select the date and time for your ride.
 - Input the number of passengers (between 0 and 8).
 - Click on the map to select the pickup and dropoff locations.
 - The estimated fare will be displayed based on the selected parameters.
 
-## Notes
+## Dependencies
 
-Ensure that your internet connection is active, as the app makes a request to an external API to fetch fare estimates.
-If you encounter any issues, check the console for error messages and troubleshoot accordingly.
+This project uses the following libraries:
+- **Streamlit**: For the web interface
+- **Folium** and **Streamlit-Folium**: For interactive map integration
+- **Requests**: For making HTTP requests to the prediction API
+- **Emoji**: For displaying emojis in the app
+
+Dependencies are managed using Poetry. See `pyproject.toml` for version details.
 
 ## License
-This project is licensed under the MIT License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
