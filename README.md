@@ -14,11 +14,11 @@ A data engineering pipeline that ingests, processes, and stores NYC taxi ride da
   - Job orchestration using `Airflow`.
   - Cloud storage on `Google Cloud Storage`
   - Analytical warehouse with `BigQuery`
-- **Taxifare API**:
+- [**Taxifare API**](https://github.com/Arivima/Le_Wagon_MLOps_Optimization_Taxifare_API):
 A cloud-deployed API providing a prediction endpoint.
   - Built with `FastAPi` and `Gunicorn`
   - Deployed on `Google Cloud Run`, using a `Docker` image hosted in `Artifact Registery`
-- **Taxifare Front**:
+- [**Taxifare Front**](https://github.com/Arivima/Le_Wagon_MLOps_Optimization_Taxifare_Front):
 A `Streamlit` application that allows users to predict taxi fares with our model.
 
 
